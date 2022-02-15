@@ -1,6 +1,7 @@
 import React from 'react';
 import { Input } from 'antd';
-const {  SettingOutlined  } = icons;
+import 'antd/dist/antd.css';
+import { SearchOutlined, PlusOutlined } from '@ant-design/icons';
 
 interface Props {
     className: string,
@@ -9,6 +10,6 @@ interface Props {
 
 export const InputCostume: React.FC<Props> = (props) => {
     return (
-        <Input addonAfter={<SettingOutlined />} className={props.className} placeholder="Что доабвить в список?" />
+        <Input addonAfter={props.inputState === 'search' ? <SearchOutlined /> : <PlusOutlined />} className={props.className} placeholder="Что доабвить в список" />
     );
 }

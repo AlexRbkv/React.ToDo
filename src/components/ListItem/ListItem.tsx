@@ -1,13 +1,18 @@
 import React from 'react';
 import { Checkbox } from 'antd';
 
-export const ListItem = () => {
+interface IListItemProps {
+    title: string,
+    checked: boolean,
+}
+
+export const ListItem: React.FC<IListItemProps> = (props) => {
 
     function onChange () {
         
     }
 
     return (
-        <Checkbox onChange={onChange}>Checkbox</Checkbox>
+        <Checkbox checked={props.checked} onChange={onChange}>{props.title}</Checkbox>
     );
 }
