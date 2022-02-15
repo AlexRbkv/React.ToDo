@@ -1,0 +1,17 @@
+.toDoWrap {
+    display: inline-flex;
+    flex-direction: column;
+    border: 1px solid gray;
+    background: white;
+    color: darkslategrey;
+    padding: 10px 15px;
+    margin: 10px 10px;
+}
+
+.toDoCaption {
+    font-size: 1rem;
+}
+
+.toDoInput {
+    margin-bottom: 24px;
+}
