@@ -1,27 +1,72 @@
 import React, {useState} from "react";
+import toDoStyles from "./todo.module.css";
+import 'antd/dist/antd.css';
+
 import {List} from "../List/List";
 import {InputCostume} from "../InputCostume/InputCostume";
-import toDoStyles from "./todo.module.css";
+import {ListMenu} from "../ListMenu/ListMenu";
 
 interface IToDo {
     title?: string,
     className?: string,
 }
 
+export interface IData {
+    title: string, checked: boolean,
+}
+
 export const ToDo: React.FC<IToDo> = (props) => {
 
-    const [inputState, setInputState] = useState('addItem');
-    const [dataState, setDataState] = useState([
-        {'id': 1, 'title': 'Item1', 'checked': false},
-        {'id': 2, 'title': 'Item2', 'checked': false},
-        {'id': 3, 'title': 'Item3', 'checked': true},
+    const [inputText, setInputText] = useState<string>('');
+    const [dataState, setDataState] = useState<Array<IData>>([
+        {'title': 'Item1', 'checked': false},
+        {'title': 'Item2', 'checked': false},
+        {'title': 'Item3', 'checked': true},
     ]);
+    const [listState, setListState] = useState<string>('all');
+
+    const onCheckChange = (item: IData) => {
+        setDataState(dataState.map((dataItem, index) => {
+            if (index == dataState.indexOf(item)) {
+                return {...dataItem, checked: !item.checked};
+            } else {
+                return dataItem;
+            }
+            
+        }));
+    }
+
+    const onInputChange = (value: string) => {
+        setInputText(value);
+    }
+
+    const addItem = (title: string) => {
+        if (title != '') {
+            setDataState(dataState => [...dataState, {'title': title, 'checked': false}]);
+        }
+    }
+
+    const checkAll = () => {
+        setDataState(dataState.map(item => {return {...item, checked: true}}));
+    }
+
+    const unchekAll = () => {
+        setDataState(dataState.map(item => {return {...item, checked: false}}));
+    }
+
+    const showAll = (listStateArg: string) => {
+        setListState(listStateArg);
+    }
 
     return (
         <div className={toDoStyles.toDoWrap}>
-            <h2 className={toDoStyles.toDoCaption}>ToDo1</h2>
-            <InputCostume className={toDoStyles.toDoInput} inputState={inputState}/>
-            <List dataState={dataState}/>
+            <div className={toDoStyles.toDoCaptionWrap}>
+                <h2 className={toDoStyles.toDoCaption}>ToDo1</h2>
+                <h5 className={toDoStyles.toDoListLength}>Количество: {dataState.length}</h5>
+            </div>
+            <InputCostume className={toDoStyles.toDoInput} onChange={onInputChange} value={inputText}/>
+            <List dataState={dataState} inputText={inputText} onCheckChange={onCheckChange} addItem={addItem}/>
+            <ListMenu checkAll={checkAll} unchekAll={unchekAll}/>
         </div>
     );
 }

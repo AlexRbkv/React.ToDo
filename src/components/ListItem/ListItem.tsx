@@ -1,18 +1,15 @@
 import React from 'react';
 import { Checkbox } from 'antd';
+import listItemStyles from './listItem.module.css';
+import {IData} from '../ToDo/ToDo';
 
 interface IListItemProps {
-    title: string,
-    checked: boolean,
+    item: IData,
+    onChange: any,
 }
 
 export const ListItem: React.FC<IListItemProps> = (props) => {
-
-    function onChange () {
-        
-    }
-
     return (
-        <Checkbox checked={props.checked} onChange={onChange}>{props.title}</Checkbox>
+        <Checkbox className={listItemStyles.listItem} checked={props.item.checked} onChange={() => props.onChange(props.item)}>{props.item.title}</Checkbox>
     );
 }
