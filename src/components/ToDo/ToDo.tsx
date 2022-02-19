@@ -15,6 +15,12 @@ export interface IData {
     title: string, checked: boolean,
 }
 
+const defaultState = {
+    dark: false,
+  };
+
+export const Context = React.createContext<Partial<any>>({});
+
 export const ToDo: React.FC<IToDo> = (props) => {
 
     const [inputText, setInputText] = useState<string>('');
@@ -54,19 +60,25 @@ export const ToDo: React.FC<IToDo> = (props) => {
         setDataState(dataState.map(item => {return {...item, checked: false}}));
     }
 
-    const showAll = (listStateArg: string) => {
-        setListState(listStateArg);
+    const removeItem = (item: IData) => {
+        setDataState(dataState.filter(target => target !== item));
+    }
+
+    const removeAllCheckedItems = () => {
+        setDataState(dataState.filter(target => target.checked === false));
     }
 
     return (
-        <div className={toDoStyles.toDoWrap}>
+        <Context.Provider value={{dataState, inputText, removeItem, onCheckChange, addItem, checkAll, unchekAll, removeAllCheckedItems}}>
+            <div className={toDoStyles.toDoWrap}>
             <div className={toDoStyles.toDoCaptionWrap}>
                 <h2 className={toDoStyles.toDoCaption}>ToDo1</h2>
                 <h5 className={toDoStyles.toDoListLength}>Количество: {dataState.length}</h5>
             </div>
             <InputCostume className={toDoStyles.toDoInput} onChange={onInputChange} value={inputText}/>
-            <List dataState={dataState} inputText={inputText} onCheckChange={onCheckChange} addItem={addItem}/>
-            <ListMenu checkAll={checkAll} unchekAll={unchekAll}/>
+            <List inputText={inputText}/>
+            <ListMenu/>
         </div>
+        </Context.Provider>
     );
 }

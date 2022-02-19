@@ -1,27 +1,15 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import listMenuStyles from './listmenu.module.css';
 import {ListMenuBtn} from './ListMenuBtn/ListMenuBtn';
+import {IData, Context} from '../ToDo/ToDo'; 
 
-interface IListItemProps {
-    checkAll?: () => void,
-    unchekAll?: () => void,
-    showItems?: (listStateArg: string) => void,
-}
-
-export const ListMenu: React.FC<IListItemProps> = (props) => {
+export const ListMenu = () => {
+    const {dataState, checkAll, unchekAll, removeAllCheckedItems} = useContext(Context);
     return (
-        <div className={listMenuStyles.listMenuWrap}>
-            <ListMenuBtn onClick={props.checkAll} text="Выделить все"/>
-            <ListMenuBtn onClick={props.unchekAll} text="Удалить выделения"/>
-            {
-                // if (showItems) {
-                //     <div>
-                //         <ListMenuBtn onClick={props.showItems} text="Все"/>
-                //         <ListMenuBtn onClick={props.showItems} text="Активные"/>
-                //         <ListMenuBtn onClick={props.showItems} text="Завершенные"/>)
-                //     </div>
-                // }
-            }
-        </div>
+            <div className={listMenuStyles.listMenuWrap}>
+                <ListMenuBtn onClick={checkAll} text="Выделить все"/>
+                <ListMenuBtn onClick={unchekAll} text="Убрать выделения"/>
+                {dataState.length !== 0 ? <ListMenuBtn onClick={removeAllCheckedItems} text="Удалить выделенные"/> : null}
+            </div>
     );
 };

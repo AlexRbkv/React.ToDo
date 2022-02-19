@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Button} from 'antd';
 
 interface IListMenuBtnProps {
@@ -9,7 +9,6 @@ interface IListMenuBtnProps {
 
 export const ListMenuBtn: React.FC<IListMenuBtnProps> = (props) => {
     const onBtnClick = props.onClick || function() {return null};
-    console.log(props.onClick);
     return (
         <Button onClick={() => onBtnClick()} type="text">{props.text}</Button>
     )
