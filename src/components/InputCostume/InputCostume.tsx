@@ -10,6 +10,6 @@ interface Props {
 
 export const InputCostume: React.FC<Props> = (props) => {
     return (
-        <Input value={props.value} addonAfter={<SearchOutlined />} onChange={(e) => props.onChange(e.target.value)} className={props.className} placeholder="Что доабвить в список" />
+        <Input style={{marginBottom:"1.2rem"}} value={props.value} onChange={(e) => props.onChange(e.target.value)} className={props.className} placeholder="Что доабвить в список" />
     );
 }

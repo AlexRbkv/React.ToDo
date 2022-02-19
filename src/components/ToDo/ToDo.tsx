@@ -9,6 +9,7 @@ import {ListMenu} from "../ListMenu/ListMenu";
 interface IToDo {
     title?: string,
     className?: string,
+    state: Array<IData>,
 }
 
 export interface IData {
@@ -24,12 +25,7 @@ export const Context = React.createContext<Partial<any>>({});
 export const ToDo: React.FC<IToDo> = (props) => {
 
     const [inputText, setInputText] = useState<string>('');
-    const [dataState, setDataState] = useState<Array<IData>>([
-        {'title': 'Item1', 'checked': false},
-        {'title': 'Item2', 'checked': false},
-        {'title': 'Item3', 'checked': true},
-    ]);
-    const [listState, setListState] = useState<string>('all');
+    const [dataState, setDataState] = useState<Array<IData>>(props.state);
 
     const onCheckChange = (item: IData) => {
         setDataState(dataState.map((dataItem, index) => {
@@ -72,7 +68,7 @@ export const ToDo: React.FC<IToDo> = (props) => {
         <Context.Provider value={{dataState, inputText, removeItem, onCheckChange, addItem, checkAll, unchekAll, removeAllCheckedItems}}>
             <div className={toDoStyles.toDoWrap}>
             <div className={toDoStyles.toDoCaptionWrap}>
-                <h2 className={toDoStyles.toDoCaption}>ToDo1</h2>
+                <h2 className={toDoStyles.toDoCaption}>{props.title}</h2>
                 <h5 className={toDoStyles.toDoListLength}>Количество: {dataState.length}</h5>
             </div>
             <InputCostume className={toDoStyles.toDoInput} onChange={onInputChange} value={inputText}/>
